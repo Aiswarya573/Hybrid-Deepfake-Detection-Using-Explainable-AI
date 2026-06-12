@@ -1,0 +1,6 @@
+{
+  "name": "Hybrid Deepfake Detection",
+  "description": "A Hydrid Deepfake Detection and Explainable AI web application supporting Image, Video, Audio, URL, and Live Webcam scanning.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

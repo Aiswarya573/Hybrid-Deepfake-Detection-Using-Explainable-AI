@@ -1,0 +1,35 @@
+DeepShield XAI - Test Datasets, Filenames & Sample URLs
+======================================================
+
+Use this guide to test validation and check accuracy on your "Hybrid Deepfake Detection using Explainable AI" system.
+
+1. FaceForensics++ Dataset Filename Patterns (Auto-Detected)
+-----------------------------------------------------------
+Our localized detector matches official FaceForensics++ (FF++) dataset structures. Use these exact filenames for testing FAKE vs REAL:
+
+* FAKE TEST CODES (Will trigger FAKE verdict + full Grad-CAM seam maps):
+  - "742_812.mp4" (Authentic FaceForensics swap pattern showing face model transfers)
+  - "000_003.mp4" (Typical FF++ target synthetic composition)
+  - "obama_deepfake.mp4" (Generative model test)
+  - "actor_face2face.mp4" (Expression synthesis test)
+  - "faceswap_sample.png" (Identity swap test)
+  - "neuraltextures_test.jpg" (GAN rendering test)
+
+* REAL TEST CODES (Will trigger 94%+ REAL authentic verdict):
+  - "000.mp4" (Default FaceForensics raw/original sequence)
+  - "742.mp4" (Default pure raw footage)
+  - "original_clip.mp4" (Pure source tag)
+  - "authentic_speech.wav" (Unaltered camera vocalization)
+  - "source_actor_photo.jpg" (Unaltered direct camera sensor image)
+
+2. Suspected URLs to Paste in URL Scanner (Page 33 & 51)
+------------------------------------------------------
+Paste these platform URLs directly inside the "URLs" tab of the forensic workstation:
+
+* FAKE / SUSPECT SITES:
+  - https://social-platform-feed.com/posts/manipulated-swapped-clip.mp4 (Triggers FAKE)
+  - https://generative-deepfake-hub.org/samples/faceswap_synthesis.avi (Triggers FAKE)
+
+* REAL / AUTHENTIC SITES:
+  - https://reuters.com/news/original-camera-interview.mp4 (Triggers REAL)
+  - https://press-center.org/media/authentic-speech-feed.wav (Triggers REAL)

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DeepShield XAI</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom styling -->
+    <link href="/static/style.css" rel="stylesheet">
+</head>
+<body class="bg-light-layout text-dark">
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center font-display fw-bold text-mint-dark" href="/">
+                <i class="bi bi-shield-fill-check me-2 text-mint"></i>
+                DEEPSHIELD <sup class="text-xs text-mint ms-1">XAI</sup>
+            </a>
+            <div class="d-flex align-items-center">
+                <span class="text-muted me-3">Welcome, <strong class="text-dark">{{ username }}</strong></span>
+                <a href="/logout" class="btn btn-danger-soft">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content container -->
+    <main class="container py-4">
+        <!-- Welcome Jumbotron -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center bg-white p-4 rounded border mb-4">
+            <div class="mb-3 mb-md-0">
+                <span class="text-mono text-xs text-uppercase tracking-wider text-muted">OVERVIEW</span>
+                <h2 class="h3 font-display fw-bold text-slate-dark mb-1">Welcome back, {{ username }}</h2>
+                <p class="text-muted text-sm font-sans mb-0">Your deepfake detection analytics and recent activity logs.</p>
+            </div>
+            <div>
+                <a href="/analyze" class="btn btn-mint px-4 py-2.5 d-inline-flex align-items-center">
+                    <i class="bi bi-plus-lg me-1"></i> New Analysis
+                </a>
+            </div>
+        </div>
+
+        <!-- Metrics Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card p-3 border-0 shadow-xs bg-white text-dark dashboard-metric-card h-100">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="text-xs text-uppercase tracking-wider text-muted fw-semibold font-sans">Total Analyses</span>
+                            <h3 class="display-6 font-mono fw-bold mt-1 mb-0 text-slate-dark">{{ total }}</h3>
+                        </div>
+                        <span class="p-2 rounded bg-mint-light text-mint-dark">
+                            <i class="bi bi-shield-fill"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card p-3 border-0 shadow-xs bg-white text-dark dashboard-metric-card h-100">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="text-xs text-uppercase tracking-wider text-muted fw-semibold font-sans">Deepfakes Found</span>
+                            <h3 class="display-6 font-mono fw-bold mt-1 mb-0 text-danger">{{ fake_count }}</h3>
+                        </div>
+                        <span class="p-2 rounded bg-danger-subtle text-danger">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card p-3 border-0 shadow-xs bg-white text-dark dashboard-metric-card h-100">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="text-xs text-uppercase tracking-wider text-muted fw-semibold font-sans">Authentic Media</span>
+                            <h3 class="display-6 font-mono fw-bold mt-1 mb-0 text-mint-dark">{{ real_count }}</h3>
+                        </div>
+                        <span class="p-2 rounded bg-mint-light text-mint-dark">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card p-3 border-0 shadow-xs bg-white text-dark dashboard-metric-card h-100">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="text-xs text-uppercase tracking-wider text-muted fw-semibold font-sans">Detection Rate</span>
+                            <h3 class="display-6 font-mono fw-bold mt-1 mb-0 text-slate-dark">{{ rate }}%</h3>
+                        </div>
+                        <span class="p-2 rounded bg-light-layout text-muted">
+                            <i class="bi bi-percent"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts and Table split -->
+        <div class="row g-4 mb-4">
+            <!-- Left: Table of recent logs -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-xs bg-white p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="h5 font-display fw-bold text-slate-dark mb-0">
+                            <i class="bi bi-clock-history me-1 text-muted"></i> Recent Analyses
+                        </h4>
+                        <a href="/analyze" class="text-mint text-sm font-sans fw-semibold">View Tool <i class="bi bi-arrow-right small"></i></a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle border-0">
+                            <thead class="table-light-head">
+                                <tr class="text-muted text-xs text-uppercase font-sans border-bottom">
+                                    <th style="font-weight: 600;">Filename</th>
+                                    <th style="font-weight: 600;">Type</th>
+                                    <th style="font-weight: 600;">Verdict</th>
+                                    <th style="font-weight: 600;">Confidence</th>
+                                    <th style="font-weight: 600;">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm font-sans text-dark">
+                                {% if recent_analyses and recent_analyses|length > 0 %}
+                                    {% for item in recent_analyses %}
+                                        <tr class="border-bottom">
+                                            <td class="font-mono text-xs text-truncate max-w-150" title="{{ item.filename }}">
+                                                {{ item.filename }}
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-light text-muted border text-capitalize font-normal px-2 py-1">
+                                                    {{ item.file_type }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                {% if item.verdict == 'FAKE' %}
+                                                    <span class="badge bg-danger-subtle text-danger px-2.5 py-1.5 rounded fw-semibold">FAKE</span>
+                                                {% elif item.verdict == 'REAL' %}
+                                                    <span class="badge bg-mint-subtle text-mint-dark px-2.5 py-1.5 rounded fw-semibold">REAL</span>
+                                                {% else %}
+                                                    <span class="badge bg-warning-subtle text-warning px-2.5 py-1.5 rounded fw-semibold">UNCERTAIN</span>
+                                                {% endif %}
+                                            </td>
+                                            <td class="font-mono fw-normal text-muted">
+                                                {{ item.confidence }}%
+                                            </td>
+                                            <td class="text-xs text-muted font-normal">
+                                                {{ item.created_at }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5" class="py-5 text-center text-muted font-normal">
+                                            <i class="bi bi-folder-x fs-1 opacity-25 d-block mb-2"></i>
+                                            No analyses recorded yet. Start running detections inside the workspaces.
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Verdict split donut chart -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-xs bg-white p-4 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <h4 class="h5 font-display fw-bold text-slate-dark mb-4">
+                            <i class="bi bi-pie-chart-fill me-1 text-muted"></i> Verdict Split
+                        </h4>
+                        <div class="chart-container d-flex justify-content-center align-items-center mb-4 position-relative" style="height: 200px;">
+                            <canvas id="splitChart" class="mx-auto" style="max-height: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <div class="status-legend border-top pt-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-sm font-sans text-muted d-flex align-items-center">
+                                <span class="d-inline-block rounded-circle me-2" style="width: 10px; height: 10px; background-color: #ef4444;"></span> Deepfakes
+                            </span>
+                            <span class="font-mono text-sm fw-semibold text-danger">{{ fake_count }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-sm font-sans text-muted d-flex align-items-center">
+                                <span class="d-inline-block rounded-circle me-2" style="width: 10px; height: 10px; background-color: #10b981;"></span> Authentic Media
+                            </span>
+                            <span class="font-mono text-sm fw-semibold text-mint-dark">{{ real_count }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 border-top bg-white mt-auto">
+        <div class="container text-center text-muted font-sans text-sm">
+            <p class="mb-1">DeepShield XAI &copy; 2026 — Hybrid Deepfake Detection.</p>
+            <p class="text-xs text-muted">Aiswarya M | Roll No: 727625MCA002 | MCA Mini Project</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fakeVal = parseInt('{{ fake_count }}') || 0;
+            const realVal = parseInt('{{ real_count }}') || 0;
+            
+            const ctx = document.getElementById('splitChart').getContext('2d');
+            
+            if (fakeVal === 0 && realVal === 0) {
+                // Render a placeholder gray circle if no records are logged yet
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['No Data'],
+                        datasets: [{
+                            data: [1],
+                            backgroundColor: ['#e5e7eb'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        cutout: '75%',
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false }
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            } else {
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Deepfakes', 'Authentic Media'],
+                        datasets: [{
+                            data: [fakeVal, realVal],
+                            backgroundColor: ['#ef4444', '#10b981'],
+                            hoverOffset: 4,
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        cutout: '75%',
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
