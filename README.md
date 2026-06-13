@@ -98,4 +98,5 @@ Paste these target URLs into the **URLs** tab to evaluate web scanning:
 ##  Security & Privacy
 
 This application uses secure **server-side API routing** to proxy and query the Gemini API, keeping your API keys hidden from client-side browsers and inspectors.
+
 Link: http://127.0.0.1:5000/ , https://hybrid-deepfake-detection-using.onrender.com
